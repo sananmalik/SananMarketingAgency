@@ -1,185 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Sanan Marketing – Coming Soon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ===== Meta & SEO ===== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SANAN Marketing – Digital Marketing Agency</title>
+    <meta name="description" content="Sanan Marketing helps businesses grow through social media marketing, branding, websites, and digital strategy.">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    <!-- ===== Open Graph (Facebook Share) ===== -->
+    <meta property="og:title" content="SANAN Marketing – Grow Your Brand" />
+    <meta property="og:description" content="Smart digital marketing solutions to grow your business." />
+    <meta property="og:image" content="https://sananmarketing.com/og-image.jpg" />
+    <meta property="og:url" content="https://sananmarketing.com" />
+    <meta property="og:type" content="website" />
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #111827, #020617);
-      color: #f9fafb;
-    }
+    <!-- ===== Favicon ===== -->
+    <link rel="icon" href="logo.png" />
 
-    .wrapper {
-      max-width: 600px;
-      width: 90%;
-      padding: 2.5rem 2rem;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.9);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
+    <!-- ===== Google Fonts ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    .logo {
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #a5b4fc;
-      margin-bottom: 0.75rem;
-    }
+    <!-- ===== Styles ===== -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
+        }
 
-    .brand {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 1.6rem;
-      color: #e5e7eb;
-    }
+        body {
+            background: #0d1117;
+            color: white;
+        }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.75rem;
-    }
+        header {
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+        }
 
-    p {
-      font-size: 0.98rem;
-      color: #cbd5f5;
-      line-height: 1.6;
-      margin-bottom: 1.6rem;
-    }
+        header h2 {
+            font-weight: 700;
+            color: #58a6ff;
+        }
 
-    .badge {
-      display: inline-block;
-      padding: 0.25rem 0.7rem;
-      font-size: 0.75rem;
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #bfdbfe;
-      border: 1px solid rgba(59, 130, 246, 0.5);
-      margin-bottom: 1.25rem;
-    }
+        header nav a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 400;
+        }
 
-    .cta-text {
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      color: #e5e7eb;
-    }
+        .hero {
+            padding-top: 120px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, #0d1117, #111827);
+        }
 
-    .contact {
-      margin-top: 0.75rem;
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 700;
+            color: #58a6ff;
+        }
 
-    .contact a {
-      color: #60a5fa;
-      text-decoration: none;
-      font-weight: 500;
-    }
+        .hero p {
+            margin-top: 15px;
+            font-size: 18px;
+            width: 60%;
+            opacity: 0.8;
+        }
 
-    .contact a:hover {
-      text-decoration: underline;
-    }
+        .btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #58a6ff;
+            border-radius: 6px;
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+            transition: 0.3s;
+        }
 
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-top: 1.4rem;
-      flex-wrap: wrap;
-    }
+        .btn:hover {
+            background: white;
+        }
 
-    .socials a {
-      font-size: 0.85rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: #e5e7eb;
-      text-decoration: none;
-      transition: all 0.18s ease;
-      background: rgba(15, 23, 42, 0.6);
-    }
+        /* ===== Sections ===== */
+        section {
+            padding: 80px 10%;
+        }
 
-    .socials a:hover {
-      background: #2563eb;
-      border-color: #2563eb;
-      color: #f9fafb;
-    }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #58a6ff;
+        }
 
-    footer {
-      margin-top: 1.6rem;
-      font-size: 0.78rem;
-      color: #6b7280;
-    }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 30px;
+        }
 
-    @media (max-width: 480px) {
-      .wrapper {
-        padding: 2rem 1.4rem;
-      }
+        .service-box {
+            padding: 25px;
+            background: #161b22;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            transition: 0.3s;
+        }
 
-      h1 {
-        font-size: 1.5rem;
-      }
+        .service-box:hover {
+            transform: translateY(-5px);
+            border-color: #58a6ff;
+        }
 
-      .brand {
-        font-size: 1.3rem;
-      }
-    }
-  </style>
+        .service-box h3 {
+            margin-bottom: 10px;
+            color: #58a6ff;
+        }
+
+        /* ===== Contact Form ===== */
+        .contact-box {
+            background: #161b22;
+            padding: 40px;
+            border-radius: 12px;
+            width: 60%;
+            margin: auto;
+            border: 1px solid #30363d;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            background: black;
+            border: 1px solid #30363d;
+            padding: 10px;
+            color: white;
+            border-radius: 6px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #58a6ff;
+            outline: none;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111827;
+            color: #777;
+        }
+
+        @media(max-width: 768px) {
+            .hero p {
+                width: 90%;
+            }
+
+            .contact-box {
+                width: 90%;
+            }
+        }
+    </style>
+
+    <!-- ===== FB META PIXEL (ADVANCED MODE) ===== -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID_HERE', {
+            em: 'email@example.com',
+            ph: '+923497588672',
+        });
+        fbq('track', 'PageView');
+    </script>
 </head>
+
 <body>
-  <div class="wrapper">
-    <div class="logo">SANAN MARKETING</div>
-    <div class="brand">sananmarketing.com</div>
 
-    <span class="badge">Website under construction</span>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <h2>SANAN MARKETING</h2>
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="https://wa.me/923497588672" target="_blank">WhatsApp</a>
+        </nav>
+    </header>
 
-    <h1>We’re building something for your brand.</h1>
-    <p>
-      Our official website is currently under construction.  
-      We’re setting up a full-service digital marketing hub to help businesses
-      grow through social media, branding, and smart online strategy.
-    </p>
-
-    <div class="cta-text">
-      For projects, collaboration, or early inquiries, reach out:
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+        <h1>We Build Brands That Grow</h1>
+        <p>We help businesses expand through smart social media strategy, branding, website development, and digital marketing excellence.</p>
+        <a class="btn" href="https://wa.me/923497588672">Start Your Project</a>
     </div>
 
-    <div class="contact">
-      Email:
-      <a href="mailto:sanan.marketing@gmail.com">sanan.marketing@gmail.com</a>
-      <br />
-      WhatsApp:
-      <a href="https://wa.me/923497588672" target="_blank">+92-349-7588672</a>
-      <!-- replace with your real number -->
-    </div>
+    <!-- ===== ABOUT ===== -->
+    <section>
+        <h2 class="section-title">About Us</h2>
+        <p style="text-align:center; width:70%; margin:auto; opacity:0.8;">
+            Sanan Marketing is a full-service digital marketing agency helping brands grow through creative strategy, storytelling, 
+            and performance-based digital campaigns. We combine design, marketing, and analytics to deliver real business results.
+        </p>
+    </section>
 
-    <div class="socials">
-      <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
-      <a href="https://facebook.com/yourpage" target="_blank">Facebook</a>
-      <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-    </div>
+    <!-- ===== SERVICES ===== -->
+    <section id="services">
+        <h2 class="section-title">Our Services</h2>
 
+        <div class="services">
+            <div class="service-box">
+                <h3>Social Media Marketing</h3>
+                <p>Full management of Facebook, Instagram, TikTok, and ads for business growth.</p>
+            </div>
+
+            <div class="service-box">
+                <h3>Branding & Design</h3>
+                <p>Logo design, brand identity, visual guidelines, and marketing content.</p>
+            </div>
+
+            <div class="service-box">
+                <h3>Website Development</h3>
+                <p>Fast, modern, SEO-optimized websites designed to convert customers.</p>
+            </div>
+
+            <div class="service-box">
+                <h3>Content Creation</h3>
+                <p>Professional posts, videos, reels, and ad creatives for all platforms.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <h2 class="section-title">Contact Us</h2>
+
+        <div class="contact-box">
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="email" name="email" placeholder="Your Email" required />
+                <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+                <button class="btn" type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
     <footer>
-      © <span id="year"></span> Sanan Marketing. All rights reserved.
+        © 2025 SANAN Marketing — All Rights Reserved.
     </footer>
-  </div>
 
-  <script>
-    // Set current year automatically
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
