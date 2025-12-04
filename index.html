@@ -20,18 +20,21 @@
                         display: ['Clash Display', 'sans-serif'],
                     },
                     colors: {
-                        bg: '#050505',     // Pitch Black
-                        card: '#0F0F0F',   // Dark Gray
-                        primary: '#6E44FF', // Electric Violet
+                        bg: '#020202',     // Deepest Black
+                        card: '#0A0A0A',   // Soft Black
+                        primary: '#7c3aed', // Violet
+                        secondary: '#3b82f6', // Blue
                         accent: '#B8FF01',  // Acid Green
                     },
                     animation: {
-                        'breathe': 'breathe 10s ease-in-out infinite',
+                        'float': 'float 20s ease-in-out infinite',
+                        'float-delayed': 'float 15s ease-in-out infinite reverse',
                     },
                     keyframes: {
-                        breathe: {
-                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
-                            '50%': { opacity: 0.5, transform: 'scale(1.1)' },
+                        float: {
+                            '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                         }
                     }
                 }
@@ -46,18 +49,26 @@
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     
     <style>
-        body { background-color: #050505; color: #ffffff; }
+        body { background-color: #020202; color: #ffffff; }
         
-        /* Subtle Grain Overlay for Texture */
+        /* Subtle Grain Overlay for Cinema Texture */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 50; opacity: 0.03;
+            pointer-events: none; z-index: 50; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
         }
         
+        /* Tech Grid Background Pattern */
+        .tech-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
         /* Hide default scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-track { background: #020202; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     </style>
 </head>
@@ -70,7 +81,6 @@
         const { motion } = window.Motion;
 
         // --- DATA ---
-        // Grouped roles for the new "Clean Grid" layout
         const SERVICES = [
             {
                 id: "01",
@@ -103,16 +113,19 @@
         const Nav = () => (
             <motion.nav 
                 initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-                className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#050505]/80 backdrop-blur-md border-b border-white/5"
+                className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#020202]/80 backdrop-blur-md border-b border-white/5"
             >
-                <div className="text-2xl font-display font-bold tracking-tight text-white">
+                <a href="#home" className="text-2xl font-display font-bold tracking-tight text-white cursor-pointer">
                     SANAN<span className="text-primary">.</span>
-                </div>
+                </a>
+                
                 <div className="hidden md:flex gap-10 text-sm font-medium text-gray-400">
+                    <a href="#home" className="hover:text-white transition-colors">Home</a>
                     <a href="#services" className="hover:text-white transition-colors">Services</a>
                     <a href="#work" className="hover:text-white transition-colors">Portfolio</a>
                     <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                 </div>
+                
                 <a href="#contact" className="px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all">
                     Get Started
                 </a>
@@ -121,16 +134,39 @@
 
         const Hero = () => {
             return (
-                <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden px-4">
-                    {/* Background Ambience (Not interactive, just breathing) */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] animate-breathe pointer-events-none" />
+                <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4">
                     
-                    <div className="z-10 text-center">
-                        <motion.h1 
-                            initial={{ opacity: 0, y: 50 }}
+                    {/* --- BACKGROUND EFFECTS --- */}
+                    <div className="absolute inset-0 z-0">
+                        {/* 1. The Grid Overlay */}
+                        <div className="absolute inset-0 tech-grid z-10 opacity-70"></div>
+                        
+                        {/* 2. The Moving Aurora Blobs */}
+                        <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-primary/30 rounded-full blur-[120px] animate-float opacity-60"></div>
+                        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-secondary/20 rounded-full blur-[100px] animate-float-delayed opacity-50"></div>
+                        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[80px] animate-pulse"></div>
+                    </div>
+
+                    {/* --- CONTENT --- */}
+                    <div className="z-20 text-center relative max-w-5xl">
+                        
+                        {/* New Tagline Pill */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="text-7xl md:text-9xl font-display font-bold tracking-tighter text-white mb-6"
+                            transition={{ duration: 0.8 }}
+                            className="inline-block mb-8"
+                        >
+                            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-mono uppercase tracking-widest text-accent">
+                                • Next Gen Agency
+                            </span>
+                        </motion.div>
+
+                        <motion.h1 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                            className="text-[13vw] md:text-[10rem] leading-[0.85] font-display font-bold tracking-tighter text-white mix-blend-overlay"
                         >
                             SANAN
                         </motion.h1>
@@ -138,11 +174,11 @@
                         <motion.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5, duration: 1 }}
-                            className="flex flex-col items-center"
+                            transition={{ delay: 0.8, duration: 1 }}
+                            className="flex flex-col items-center mt-6"
                         >
-                            <div className="h-[1px] w-24 bg-accent mb-6"></div>
-                            <h2 className="text-lg md:text-2xl font-sans font-light tracking-[0.5em] uppercase text-gray-300">
+                            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-accent to-transparent mb-8 opacity-50"></div>
+                            <h2 className="text-lg md:text-2xl font-sans font-light tracking-[0.6em] uppercase text-gray-300 ml-2">
                                 Marketing Evolved
                             </h2>
                         </motion.div>
@@ -150,11 +186,12 @@
                         <motion.div 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1 }}
-                            className="mt-12 flex gap-6 justify-center"
+                            transition={{ delay: 1.2 }}
+                            className="mt-16 flex gap-6 justify-center"
                         >
-                            <a href="#services" className="px-8 py-3 border border-white/20 rounded-full text-sm hover:bg-white hover:text-black transition duration-300">
-                                Explore Services
+                            <a href="#services" className="group relative px-8 py-3 rounded-full text-sm font-semibold text-white overflow-hidden bg-white/5 border border-white/10 hover:border-accent/50 transition-all duration-300">
+                                <span className="relative z-10 group-hover:text-accent transition-colors">Explore Ecosystem</span>
+                                <div className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                             </a>
                         </motion.div>
                     </div>
@@ -223,30 +260,30 @@
                     <div className="grid md:grid-cols-3 gap-8">
                         {/* Placeholder Project 1 */}
                         <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-accent/30 transition-all">
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
                                 <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white">E-Commerce Scale</h4>
+                                    <h4 className="text-xl font-bold text-white group-hover:text-accent transition-colors">E-Commerce Scale</h4>
                                     <p className="text-sm text-gray-400">SEO & Paid Media</p>
                                 </div>
                             </div>
                         </div>
                         {/* Placeholder Project 2 */}
                         <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-primary/30 transition-all">
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
                                 <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white">FinTech Rebrand</h4>
+                                    <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors">FinTech Rebrand</h4>
                                     <p className="text-sm text-gray-400">Identity & UI/UX</p>
                                 </div>
                             </div>
                         </div>
                         {/* Placeholder Project 3 */}
                         <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-blue-500/30 transition-all">
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
                                 <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white">SaaS Launch</h4>
+                                    <h4 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">SaaS Launch</h4>
                                     <p className="text-sm text-gray-400">Strategy & Content</p>
                                 </div>
                             </div>
@@ -260,8 +297,10 @@
             const [copied, setCopied] = useState(false);
 
             return (
-                <section id="contact" className="py-32 px-6 bg-bg text-center">
-                    <div className="max-w-4xl mx-auto">
+                <section id="contact" className="py-32 px-6 bg-bg text-center relative overflow-hidden">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+                    <div className="max-w-4xl mx-auto relative z-10">
                         <p className="text-accent font-mono mb-8 uppercase tracking-widest">Let's work together</p>
                         
                         <div 
@@ -272,7 +311,7 @@
                             }}
                             className="group cursor-pointer inline-block relative"
                         >
-                            <h2 className="text-5xl md:text-7xl font-display font-bold text-white hover:text-gray-300 transition-colors">
+                            <h2 className="text-5xl md:text-8xl font-display font-bold text-white hover:text-gray-300 transition-colors">
                                 sanan.marketing<br/>@gmail.com
                             </h2>
                             <div className={`mt-4 text-sm font-mono text-primary transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
