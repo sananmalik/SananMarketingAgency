@@ -20,11 +20,11 @@
                         display: ['Clash Display', 'sans-serif'],
                     },
                     colors: {
-                        bg: '#020202',     // Deepest Black
-                        card: '#0A0A0A',   // Soft Black
-                        primary: '#7c3aed', // Violet
-                        secondary: '#3b82f6', // Blue
-                        accent: '#B8FF01',  // Acid Green
+                        bg: '#020202',     
+                        card: '#0A0A0A',   
+                        primary: '#7c3aed', 
+                        secondary: '#3b82f6', 
+                        accent: '#B8FF01',
                     },
                     animation: {
                         'float': 'float 20s ease-in-out infinite',
@@ -49,16 +49,16 @@
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     
     <style>
-        body { background-color: #020202; color: #ffffff; }
+        body { background-color: #020202; color: #ffffff; overflow-x: hidden; }
         
-        /* Subtle Grain Overlay for Cinema Texture */
+        /* Cinematic Grain Overlay */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 50; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
         }
         
-        /* Tech Grid Background Pattern */
+        /* Grid Pattern */
         .tech-grid {
             background-size: 50px 50px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -66,7 +66,7 @@
             mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
-        /* Hide default scrollbar */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #020202; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -77,122 +77,158 @@
     <div class="noise"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { motion } = window.Motion;
+        const { useState, useEffect, useRef } = React;
+        const { motion, useScroll, useTransform, AnimatePresence } = window.Motion;
+
+        // --- ANIMATION VARIANTS (REUSABLE) ---
+        const fadeInUp = {
+            hidden: { opacity: 0, y: 40 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+        };
+
+        const staggerContainer = {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+            }
+        };
+
+        const scaleHover = {
+            hover: { scale: 1.05, transition: { duration: 0.3 } }
+        };
+
+        // --- ICONS ---
+        const SocialIcon = ({ path, href }) => (
+            <motion.a 
+                href={href}
+                whileHover={{ scale: 1.2, color: "#B8FF01" }}
+                whileTap={{ scale: 0.9 }}
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white/10 transition-colors"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {path}
+                </svg>
+            </motion.a>
+        );
 
         // --- DATA ---
         const SERVICES = [
-            {
-                id: "01",
-                title: "Strategy & Leadership",
-                desc: "We build the roadmap before we drive.",
-                roles: ["Marketing Director", "Marketing Strategist", "Account Manager", "Project Manager", "Client Executive"]
-            },
-            {
-                id: "02",
-                title: "Creative & Identity",
-                desc: "Visuals that stop the scroll.",
-                roles: ["Creative Director", "Art Director", "Graphic Designer", "Video Production", "UX/UI Designer"]
-            },
-            {
-                id: "03",
-                title: "Growth & Performance",
-                desc: "Campaigns that generate revenue, not just likes.",
-                roles: ["Paid Media Specialist", "SEO Specialist", "Social Media Manager", "Email Marketing", "Influencer Manager"]
-            },
-            {
-                id: "04",
-                title: "Tech & Data",
-                desc: "Infrastructure that scales with you.",
-                roles: ["Web Developer", "Data Analyst", "PR Specialist", "Content Writer", "Event Coordinator"]
-            }
+            { id: "01", title: "Strategy & Leadership", desc: "We build the roadmap before we drive.", roles: ["Marketing Director", "Strategist", "Account Manager"] },
+            { id: "02", title: "Creative & Identity", desc: "Visuals that stop the scroll.", roles: ["Creative Director", "Art Director", "Graphic Designer"] },
+            { id: "03", title: "Growth & Performance", desc: "Campaigns that generate revenue.", roles: ["Paid Media", "SEO Specialist", "Social Media Manager"] },
+            { id: "04", title: "Tech & Data", desc: "Infrastructure that scales with you.", roles: ["Web Developer", "Data Analyst", "PR Specialist"] }
         ];
 
         // --- COMPONENTS ---
 
-        const Nav = () => (
-            <motion.nav 
-                initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-                className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#020202]/80 backdrop-blur-md border-b border-white/5"
-            >
-                <a href="#home" className="text-2xl font-display font-bold tracking-tight text-white cursor-pointer">
-                    SANAN<span className="text-primary">.</span>
-                </a>
-                
-                <div className="hidden md:flex gap-10 text-sm font-medium text-gray-400">
-                    <a href="#home" className="hover:text-white transition-colors">Home</a>
-                    <a href="#services" className="hover:text-white transition-colors">Services</a>
-                    <a href="#work" className="hover:text-white transition-colors">Portfolio</a>
-                    <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-                </div>
-                
-                <a href="#contact" className="px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all">
-                    Get Started
-                </a>
-            </motion.nav>
-        );
+        const Nav = () => {
+            const [isOpen, setIsOpen] = useState(false);
+
+            return (
+                <>
+                    <motion.nav 
+                        initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
+                        className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#020202]/80 backdrop-blur-md border-b border-white/5"
+                    >
+                        <a href="#home" className="text-2xl font-display font-bold tracking-tight text-white cursor-pointer relative z-50">
+                            SANAN<span className="text-primary">.</span>
+                        </a>
+                        
+                        {/* Desktop Menu */}
+                        <div className="hidden md:flex gap-10 text-sm font-medium text-gray-400">
+                            {['Home', 'Services', 'Work', 'Contact'].map((item) => (
+                                <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors relative group">
+                                    {item}
+                                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                                </a>
+                            ))}
+                        </div>
+                        
+                        <div className="hidden md:block">
+                            <motion.a 
+                                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                                href="#contact" 
+                                className="px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                            >
+                                Get Started
+                            </motion.a>
+                        </div>
+
+                        {/* Mobile Hamburger */}
+                        <div className="md:hidden z-50" onClick={() => setIsOpen(!isOpen)}>
+                            <div className="space-y-1.5 cursor-pointer p-2">
+                                <motion.div animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="w-6 h-0.5 bg-white"></motion.div>
+                                <motion.div animate={isOpen ? { opacity: 0 } : { opacity: 1 }} className="w-6 h-0.5 bg-white"></motion.div>
+                                <motion.div animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="w-6 h-0.5 bg-white"></motion.div>
+                            </div>
+                        </div>
+                    </motion.nav>
+
+                    {/* Mobile Menu Overlay */}
+                    <AnimatePresence>
+                        {isOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0, x: "100%" }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: "100%" }}
+                                transition={{ type: "tween", duration: 0.4 }}
+                                className="fixed inset-0 bg-[#050505] z-40 flex flex-col justify-center items-center gap-8 md:hidden"
+                            >
+                                {['Home', 'Services', 'Work', 'Contact'].map((item) => (
+                                    <a 
+                                        key={item} 
+                                        href={`#${item.toLowerCase()}`} 
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-4xl font-display font-bold text-white hover:text-accent transition-colors"
+                                    >
+                                        {item}
+                                    </a>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </>
+            );
+        };
 
         const Hero = () => {
+            const { scrollY } = useScroll();
+            const yText = useTransform(scrollY, [0, 500], [0, 200]); // Parallax Text
+
             return (
                 <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4">
                     
-                    {/* --- BACKGROUND EFFECTS --- */}
+                    {/* Background */}
                     <div className="absolute inset-0 z-0">
-                        {/* 1. The Grid Overlay */}
                         <div className="absolute inset-0 tech-grid z-10 opacity-70"></div>
-                        
-                        {/* 2. The Moving Aurora Blobs */}
                         <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-primary/30 rounded-full blur-[120px] animate-float opacity-60"></div>
                         <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-secondary/20 rounded-full blur-[100px] animate-float-delayed opacity-50"></div>
-                        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[80px] animate-pulse"></div>
                     </div>
 
-                    {/* --- CONTENT --- */}
-                    <div className="z-20 text-center relative max-w-5xl">
-                        
-                        {/* New Tagline Pill */}
+                    <div className="z-20 text-center relative max-w-6xl">
                         <motion.div 
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
+                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
                             className="inline-block mb-8"
                         >
-                            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-mono uppercase tracking-widest text-accent">
-                                • Next Gen Agency
+                            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-mono uppercase tracking-widest text-accent shadow-[0_0_15px_rgba(184,255,1,0.2)]">
+                                • Future Ready Agency
                             </span>
                         </motion.div>
 
                         <motion.h1 
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.9, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                            className="text-[13vw] md:text-[10rem] leading-[0.85] font-display font-bold tracking-tighter text-white mix-blend-overlay"
+                            className="text-[14vw] md:text-[11rem] leading-[0.85] font-display font-bold tracking-tighter text-white mix-blend-overlay"
                         >
                             SANAN
                         </motion.h1>
                         
-                        <motion.div 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8, duration: 1 }}
-                            className="flex flex-col items-center mt-6"
-                        >
+                        <motion.div style={{ y: yText }} className="flex flex-col items-center mt-6">
                             <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-accent to-transparent mb-8 opacity-50"></div>
-                            <h2 className="text-lg md:text-2xl font-sans font-light tracking-[0.6em] uppercase text-gray-300 ml-2">
+                            <h2 className="text-xl md:text-3xl font-sans font-light tracking-[0.5em] uppercase text-gray-300 ml-2">
                                 Marketing Evolved
                             </h2>
-                        </motion.div>
-
-                        <motion.div 
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2 }}
-                            className="mt-16 flex gap-6 justify-center"
-                        >
-                            <a href="#services" className="group relative px-8 py-3 rounded-full text-sm font-semibold text-white overflow-hidden bg-white/5 border border-white/10 hover:border-accent/50 transition-all duration-300">
-                                <span className="relative z-10 group-hover:text-accent transition-colors">Explore Ecosystem</span>
-                                <div className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                            </a>
                         </motion.div>
                     </div>
                 </section>
@@ -202,44 +238,42 @@
         const Services = () => (
             <section id="services" className="py-32 px-6 bg-bg relative">
                 <div className="max-w-7xl mx-auto">
-                    <div className="mb-20">
+                    <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
+                        variants={fadeInUp}
+                        className="mb-20"
+                    >
                         <span className="text-accent text-xs font-bold tracking-widest uppercase">What We Do</span>
-                        <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">Full-Service Ecosystem</h2>
-                    </div>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold mt-4 text-white">Full-Service Ecosystem</h2>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
+                        variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                    >
                         {SERVICES.map((service, index) => (
                             <motion.div 
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                className="group p-10 rounded-2xl bg-card border border-white/5 hover:border-primary/50 transition-colors duration-500"
+                                key={index} variants={fadeInUp}
+                                whileHover={{ y: -10, borderColor: "rgba(110, 68, 255, 0.5)" }}
+                                className="group p-10 rounded-2xl bg-card border border-white/5 transition-all duration-500 hover:shadow-[0_0_30px_rgba(124,58,237,0.1)]"
                             >
                                 <div className="flex justify-between items-start mb-6">
-                                    <span className="text-5xl font-display font-bold text-white/10 group-hover:text-white/20 transition-colors">
-                                        {service.id}
-                                    </span>
-                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                    </div>
+                                    <span className="text-5xl font-display font-bold text-white/10 group-hover:text-white/20 transition-colors">{service.id}</span>
+                                    <motion.div whileHover={{ rotate: 90 }} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </motion.div>
                                 </div>
                                 <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
                                 <p className="text-gray-400 mb-8 h-12">{service.desc}</p>
-                                
-                                <div className="border-t border-white/10 pt-6">
-                                    <div className="flex flex-wrap gap-2">
-                                        {service.roles.map((role, i) => (
-                                            <span key={i} className="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 border border-white/5">
-                                                {role}
-                                            </span>
-                                        ))}
-                                    </div>
+                                <div className="flex flex-wrap gap-2 pt-6 border-t border-white/10">
+                                    {service.roles.map((role, i) => (
+                                        <span key={i} className="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 border border-white/5">{role}</span>
+                                    ))}
                                 </div>
                             </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         );
@@ -247,110 +281,106 @@
         const Portfolio = () => (
             <section id="work" className="py-32 px-6 bg-card border-y border-white/5">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+                    <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
+                        className="flex flex-col md:flex-row justify-between items-end mb-16"
+                    >
                         <div>
                             <span className="text-primary text-xs font-bold tracking-widest uppercase">Our Work</span>
                             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">Selected Cases</h2>
                         </div>
-                        <a href="#contact" className="hidden md:block text-sm text-gray-400 border-b border-gray-600 pb-1 hover:text-white hover:border-white transition">
-                            Start your project
-                        </a>
-                    </div>
+                        <a href="#contact" className="hidden md:block text-sm text-gray-400 border-b border-gray-600 pb-1 hover:text-white hover:border-white transition">Start your project</a>
+                    </motion.div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {/* Placeholder Project 1 */}
-                        <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-accent/30 transition-all">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
-                                <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white group-hover:text-accent transition-colors">E-Commerce Scale</h4>
-                                    <p className="text-sm text-gray-400">SEO & Paid Media</p>
+                    <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+                        className="grid md:grid-cols-3 gap-8"
+                    >
+                        {[
+                            { title: "E-Commerce Scale", cat: "SEO & Paid Media", color: "group-hover:text-accent", border: "group-hover:border-accent/30" },
+                            { title: "FinTech Rebrand", cat: "Identity & UI/UX", color: "group-hover:text-primary", border: "group-hover:border-primary/30" },
+                            { title: "SaaS Launch", cat: "Strategy & Content", color: "group-hover:text-secondary", border: "group-hover:border-secondary/30" }
+                        ].map((item, i) => (
+                            <motion.div key={i} variants={fadeInUp} className="group cursor-pointer">
+                                <div className={`h-80 w-full bg-[#151515] rounded-xl overflow-hidden mb-6 relative border border-white/5 ${item.border} transition-all duration-500`}>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80 z-10"></div>
+                                    <motion.div 
+                                        whileHover={{ scale: 1.1 }} transition={{ duration: 0.6 }}
+                                        className="w-full h-full bg-[#1a1a1a] opacity-50"
+                                    ></motion.div>
+                                    <div className="absolute bottom-6 left-6 z-20">
+                                        <h4 className={`text-xl font-bold text-white ${item.color} transition-colors`}>{item.title}</h4>
+                                        <p className="text-sm text-gray-400">{item.cat}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        {/* Placeholder Project 2 */}
-                        <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-primary/30 transition-all">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
-                                <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors">FinTech Rebrand</h4>
-                                    <p className="text-sm text-gray-400">Identity & UI/UX</p>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Placeholder Project 3 */}
-                        <div className="group cursor-pointer">
-                            <div className="h-80 w-full bg-[#1a1a1a] rounded-xl overflow-hidden mb-6 relative border border-white/5 group-hover:border-blue-500/30 transition-all">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80"></div>
-                                <div className="absolute bottom-6 left-6">
-                                    <h4 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">SaaS Launch</h4>
-                                    <p className="text-sm text-gray-400">Strategy & Content</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 </div>
             </section>
         );
 
         const Contact = () => {
             const [copied, setCopied] = useState(false);
-
             return (
                 <section id="contact" className="py-32 px-6 bg-bg text-center relative overflow-hidden">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
-
+                    <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 5, repeat: Infinity }} className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[100px] pointer-events-none"></motion.div>
+                    
                     <div className="max-w-4xl mx-auto relative z-10">
-                        <p className="text-accent font-mono mb-8 uppercase tracking-widest">Let's work together</p>
+                        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-accent font-mono mb-8 uppercase tracking-widest">Let's work together</motion.p>
                         
-                        <div 
-                            onClick={() => {
-                                navigator.clipboard.writeText("sanan.marketing@gmail.com");
-                                setCopied(true);
-                                setTimeout(() => setCopied(false), 2000);
-                            }}
+                        <motion.div 
+                            initial={{ y: 50, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}
+                            onClick={() => { navigator.clipboard.writeText("sanan.marketing@gmail.com"); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
                             className="group cursor-pointer inline-block relative"
                         >
-                            <h2 className="text-5xl md:text-8xl font-display font-bold text-white hover:text-gray-300 transition-colors">
-                                sanan.marketing<br/>@gmail.com
-                            </h2>
-                            <div className={`mt-4 text-sm font-mono text-primary transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
-                                Copied to clipboard!
-                            </div>
-                        </div>
+                            <h2 className="text-4xl md:text-8xl font-display font-bold text-white hover:text-gray-300 transition-colors">sanan.marketing<br/>@gmail.com</h2>
+                            <AnimatePresence>
+                                {copied && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-mono text-primary">Copied to clipboard!</motion.div>}
+                            </AnimatePresence>
+                        </motion.div>
 
-                        <div className="mt-16 grid gap-4 max-w-md mx-auto">
-                            <p className="text-gray-500 text-sm">Or drop us a quick inquiry below</p>
-                            <input type="email" placeholder="Your Email Address" className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary transition" />
-                            <button className="w-full bg-white text-black font-bold rounded-lg p-4 hover:bg-primary hover:text-white transition-all">
-                                Send Inquiry
-                            </button>
-                        </div>
+                        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-16 max-w-md mx-auto">
+                            <input type="email" placeholder="Your Email Address" className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary transition mb-4" />
+                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full bg-white text-black font-bold rounded-lg p-4 hover:bg-primary hover:text-white transition-all">Send Inquiry</motion.button>
+                        </motion.div>
                     </div>
                 </section>
             );
         };
 
         const Footer = () => (
-            <footer className="py-8 border-t border-white/5 text-center bg-bg">
-                <p className="text-gray-600 text-xs uppercase tracking-wider">
-                    © 2025 Sanan Marketing Agency. All Rights Reserved.
-                </p>
+            <footer className="py-12 border-t border-white/5 bg-[#020202] relative z-10">
+                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+                    
+                    {/* Brand */}
+                    <div className="text-center md:text-left">
+                        <div className="text-xl font-display font-bold text-white">SANAN<span className="text-primary">.</span></div>
+                        <p className="text-gray-600 text-xs mt-2 uppercase tracking-wider">© 2025 Sanan Agency. All Rights Reserved.</p>
+                    </div>
+
+                    {/* Social Icons with Animation */}
+                    <div className="flex gap-4">
+                        <SocialIcon href="#" path={<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>} /> {/* LinkedIn */}
+                        <SocialIcon href="#" path={<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>} /> {/* Instagram */}
+                        <SocialIcon href="#" path={<path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>} /> {/* X / Twitter */}
+                        <SocialIcon href="#" path={<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>} /> {/* Facebook */}
+                    </div>
+
+                </div>
             </footer>
         );
 
-        const App = () => {
-            return (
-                <main className="antialiased selection:bg-accent selection:text-black">
-                    <Nav />
-                    <Hero />
-                    <Services />
-                    <Portfolio />
-                    <Contact />
-                    <Footer />
-                </main>
-            );
-        };
+        const App = () => (
+            <main className="antialiased selection:bg-accent selection:text-black">
+                <Nav />
+                <Hero />
+                <Services />
+                <Portfolio />
+                <Contact />
+                <Footer />
+            </main>
+        );
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
