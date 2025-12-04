@@ -1,197 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- ===== Meta & SEO ===== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SANAN Marketing – Digital Marketing Agency</title>
-    <meta name="description" content="Sanan Marketing helps businesses grow through social media marketing, branding, websites, and digital strategy.">
+    <meta name="description"
+        content="Sanan Marketing helps businesses grow through social media marketing, branding, websites, and digital strategy." />
 
-    <!-- ===== Open Graph (Facebook Share) ===== -->
+    <!-- Open Graph -->
     <meta property="og:title" content="SANAN Marketing – Grow Your Brand" />
     <meta property="og:description" content="Smart digital marketing solutions to grow your business." />
     <meta property="og:image" content="https://sananmarketing.com/og-image.jpg" />
     <meta property="og:url" content="https://sananmarketing.com" />
     <meta property="og:type" content="website" />
 
-    <!-- ===== Favicon ===== -->
     <link rel="icon" href="logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- ===== Google Fonts ===== -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- ===== Styles ===== -->
     <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #111827;
+            --card: #161b22;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --accent: #58a6ff;
+            --accent-2: #6ee7b7;
+        }
+
         * {
             margin: 0;
             padding: 0;
-            font-family: "Poppins", sans-serif;
             box-sizing: border-box;
         }
 
         body {
-            background: #0d1117;
-            color: white;
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 20px 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            top: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            z-index: 999;
+            padding: 18px 8vw;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 1000;
         }
 
-        header h2 {
+        .logo {
             font-weight: 700;
-            color: #58a6ff;
+            letter-spacing: 0.5px;
+            color: var(--accent);
         }
 
-        header nav a {
-            margin-left: 25px;
-            text-decoration: none;
-            color: white;
-            font-weight: 400;
+        nav a {
+            margin-left: 24px;
+            font-weight: 500;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a.cta {
+            color: var(--text);
+        }
+
+        nav a.cta {
+            padding: 10px 16px;
+            border: 1px solid rgba(88, 166, 255, 0.4);
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), rgba(110, 231, 183, 0.12));
+        }
+
+        main {
+            padding-top: 96px;
+        }
+
+        section {
+            padding: 80px 8vw;
         }
 
         .hero {
-            padding-top: 120px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             align-items: center;
-            text-align: center;
-            background: linear-gradient(to bottom, #0d1117, #111827);
+            gap: 40px;
+            padding: 120px 8vw 80px;
+            background: radial-gradient(circle at 20% 20%, rgba(88, 166, 255, 0.15), transparent 30%),
+                radial-gradient(circle at 80% 10%, rgba(110, 231, 183, 0.1), transparent 25%),
+                linear-gradient(180deg, #0d1117, #0f172a);
         }
 
         .hero h1 {
-            font-size: 50px;
-            font-weight: 700;
-            color: #58a6ff;
+            font-size: clamp(36px, 4vw, 54px);
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
         }
 
         .hero p {
-            margin-top: 15px;
-            font-size: 18px;
-            width: 60%;
-            opacity: 0.8;
+            max-width: 560px;
+            color: var(--muted);
+            margin-bottom: 22px;
+            font-size: 17px;
+        }
+
+        .hero .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
         }
 
         .btn {
-            margin-top: 25px;
-            padding: 12px 25px;
-            background: #58a6ff;
-            border-radius: 6px;
-            text-decoration: none;
-            color: black;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+            background: linear-gradient(135deg, var(--accent), #7cc6ff);
+            color: #0b1021;
+            box-shadow: 0 12px 30px rgba(88, 166, 255, 0.25);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text);
+            box-shadow: none;
         }
 
         .btn:hover {
-            background: white;
+            transform: translateY(-2px);
         }
 
-        /* ===== Sections ===== */
-        section {
-            padding: 80px 10%;
+        .panel {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
         }
 
         .section-title {
+            font-size: 32px;
+            margin-bottom: 14px;
             text-align: center;
-            font-size: 36px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            text-align: center;
             margin-bottom: 40px;
-            color: #58a6ff;
+            max-width: 680px;
+            margin-inline: auto;
         }
 
-        .services {
+        .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
         }
 
-        .service-box {
-            padding: 25px;
-            background: #161b22;
+        .stat {
+            padding: 18px 20px;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 12px;
-            border: 1px solid #30363d;
-            transition: 0.3s;
         }
 
-        .service-box:hover {
-            transform: translateY(-5px);
-            border-color: #58a6ff;
+        .stat h3 {
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 4px;
         }
 
-        .service-box h3 {
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .service-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(88, 166, 255, 0.45);
+        }
+
+        .service-card h3 {
             margin-bottom: 10px;
-            color: #58a6ff;
+            font-size: 20px;
         }
 
-        /* ===== Contact Form ===== */
-        .contact-box {
-            background: #161b22;
-            padding: 40px;
+        .service-card p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--card);
+            padding: 18px;
             border-radius: 12px;
-            width: 60%;
-            margin: auto;
-            border: 1px solid #30363d;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .process-step .badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .testimonial {
+            padding: 22px;
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .testimonial p {
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .testimonial strong {
+            color: var(--text);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .work-card {
+            padding: 18px;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .work-card h4 {
+            margin-bottom: 6px;
+        }
+
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+
+        form {
+            display: grid;
+            gap: 14px;
         }
 
         input,
         textarea {
             width: 100%;
-            margin-bottom: 15px;
-            background: black;
-            border: 1px solid #30363d;
-            padding: 10px;
-            color: white;
-            border-radius: 6px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text);
         }
 
         input:focus,
         textarea:focus {
-            border-color: #58a6ff;
-            outline: none;
+            outline: 1px solid rgba(88, 166, 255, 0.6);
         }
 
-        /* ===== Footer ===== */
         footer {
+            padding: 24px 8vw 40px;
+            background: #0b0f1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--muted);
             text-align: center;
-            padding: 20px;
-            background: #111827;
-            color: #777;
         }
 
-        @media(max-width: 768px) {
-            .hero p {
-                width: 90%;
+        @media (max-width: 720px) {
+            header {
+                padding: 16px 6vw;
             }
 
-            .contact-box {
-                width: 90%;
+            nav a {
+                margin-left: 14px;
+            }
+
+            .hero {
+                padding: 110px 6vw 70px;
+            }
+
+            section {
+                padding: 70px 6vw;
             }
         }
     </style>
 
-    <!-- ===== FB META PIXEL (ADVANCED MODE) ===== -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;
-            n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () { n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', 'YOUR_PIXEL_ID_HERE', {
             em: 'email@example.com',
             ph: '+923497588672',
@@ -201,78 +362,175 @@
 </head>
 
 <body>
-
-    <!-- ===== HEADER ===== -->
     <header>
-        <h2>SANAN MARKETING</h2>
+        <div class="logo">SANAN MARKETING</div>
         <nav>
             <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
-            <a href="https://wa.me/923497588672" target="_blank">WhatsApp</a>
+            <a href="#process">Process</a>
+            <a href="#work">Work</a>
+            <a href="#contact" class="cta">Contact</a>
         </nav>
     </header>
 
-    <!-- ===== HERO ===== -->
-    <div class="hero">
-        <h1>We Build Brands That Grow</h1>
-        <p>We help businesses expand through smart social media strategy, branding, website development, and digital marketing excellence.</p>
-        <a class="btn" href="https://wa.me/923497588672">Start Your Project</a>
-    </div>
-
-    <!-- ===== ABOUT ===== -->
-    <section>
-        <h2 class="section-title">About Us</h2>
-        <p style="text-align:center; width:70%; margin:auto; opacity:0.8;">
-            Sanan Marketing is a full-service digital marketing agency helping brands grow through creative strategy, storytelling, 
-            and performance-based digital campaigns. We combine design, marketing, and analytics to deliver real business results.
-        </p>
-    </section>
-
-    <!-- ===== SERVICES ===== -->
-    <section id="services">
-        <h2 class="section-title">Our Services</h2>
-
-        <div class="services">
-            <div class="service-box">
-                <h3>Social Media Marketing</h3>
-                <p>Full management of Facebook, Instagram, TikTok, and ads for business growth.</p>
+    <main>
+        <section class="hero">
+            <div>
+                <h1>Marketing that turns <span>attention</span> into revenue.</h1>
+                <p>We craft campaigns, content, and websites that help brands stand out online. From paid media to brand identity,
+                    we deliver measurable growth for ambitious teams.</p>
+                <div class="cta-row">
+                    <a class="btn" href="https://wa.me/923497588672" target="_blank" rel="noreferrer">Book a discovery call</a>
+                    <a class="btn secondary" href="#services">Explore our services</a>
+                </div>
             </div>
-
-            <div class="service-box">
-                <h3>Branding & Design</h3>
-                <p>Logo design, brand identity, visual guidelines, and marketing content.</p>
+            <div class="panel">
+                <p style="color: var(--muted); margin-bottom: 14px;">Trusted by founders and marketing leaders.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>240%</h3>
+                        <p>Average ROAS across paid social campaigns.</p>
+                    </div>
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Brand identities launched across multiple industries.</p>
+                    </div>
+                    <div class="stat">
+                        <h3>6x</h3>
+                        <p>Increase in qualified leads for web projects.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="service-box">
-                <h3>Website Development</h3>
-                <p>Fast, modern, SEO-optimized websites designed to convert customers.</p>
+        <section id="services">
+            <h2 class="section-title">What we do</h2>
+            <p class="section-subtitle">Full-service strategy, creative, and execution so you can focus on growth.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Social Media & Paid Ads</h3>
+                    <p>Performance-driven campaigns across Facebook, Instagram, and TikTok with clear creative testing and weekly reporting.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Branding & Identity</h3>
+                    <p>Logos, visual systems, tone of voice, and launch kits that keep your brand consistent everywhere it shows up.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Website Design & Build</h3>
+                    <p>Modern, SEO-ready sites built for conversions with fast performance and easy content updates.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Content & Creative</h3>
+                    <p>Scroll-stopping posts, ad creatives, and video edits tailored to each platform and audience.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Email & Automation</h3>
+                    <p>Lifecycle journeys, CRM setup, and newsletters that turn subscribers into loyal customers.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Analytics & Optimization</h3>
+                    <p>Dashboards, conversion tracking, and A/B testing to keep campaigns accountable and improving.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="service-box">
-                <h3>Content Creation</h3>
-                <p>Professional posts, videos, reels, and ad creatives for all platforms.</p>
+        <section id="process">
+            <h2 class="section-title">How we work</h2>
+            <p class="section-subtitle">A collaborative process built to deliver momentum, not just deliverables.</p>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="badge">1</div>
+                    <div>
+                        <h4>Discovery & Strategy</h4>
+                        <p class="section-subtitle" style="margin: 6px 0 0; text-align: left;">We map goals, audience, and positioning, then design a focused marketing plan.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="badge">2</div>
+                    <div>
+                        <h4>Creative Production</h4>
+                        <p class="section-subtitle" style="margin: 6px 0 0; text-align: left;">Brand assets, ad creatives, landing pages, and content that fit the strategy.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="badge">3</div>
+                    <div>
+                        <h4>Launch & Optimize</h4>
+                        <p class="section-subtitle" style="margin: 6px 0 0; text-align: left;">Measure, iterate, and scale with clear KPIs and transparent reporting.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ===== CONTACT ===== -->
-    <section id="contact">
-        <h2 class="section-title">Contact Us</h2>
+        <section id="work">
+            <h2 class="section-title">Recent wins</h2>
+            <p class="section-subtitle">A snapshot of outcomes we helped create.</p>
+            <div class="work-grid">
+                <div class="work-card">
+                    <h4>D2C Apparel</h4>
+                    <p class="section-subtitle" style="text-align: left; margin: 4px 0 0;">3.5x ROAS in 60 days through creative testing and new landing pages.</p>
+                </div>
+                <div class="work-card">
+                    <h4>B2B SaaS</h4>
+                    <p class="section-subtitle" style="text-align: left; margin: 4px 0 0;">6x increase in demo requests after a website refresh and paid social program.</p>
+                </div>
+                <div class="work-card">
+                    <h4>Hospitality</h4>
+                    <p class="section-subtitle" style="text-align: left; margin: 4px 0 0;">Full rebrand and content rollout, boosting bookings month-over-month.</p>
+                </div>
+                <div class="work-card">
+                    <h4>Health & Wellness</h4>
+                    <p class="section-subtitle" style="text-align: left; margin: 4px 0 0;">Email automation and ad funnels driving consistent subscription growth.</p>
+                </div>
+            </div>
+        </section>
 
-        <div class="contact-box">
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required />
-                <input type="email" name="email" placeholder="Your Email" required />
-                <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-                <button class="btn" type="submit">Send Message</button>
-            </form>
-        </div>
-    </section>
+        <section>
+            <h2 class="section-title">What clients say</h2>
+            <p class="section-subtitle">Partnerships built on clarity, speed, and results.</p>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>“Sanan Marketing rebuilt our paid social program from the ground up. We finally have consistent revenue and reporting we can trust.”</p>
+                    <strong>— Sarah M., D2C Founder</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“The new brand and site feel exactly like us. Within two weeks, demo requests jumped and our sales team is thrilled.”</p>
+                    <strong>— Daniel K., SaaS CEO</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“Fast, collaborative, and strategic. They spot opportunities quickly and execute without endless meetings.”</p>
+                    <strong>— Ayesha P., Marketing Lead</strong>
+                </div>
+            </div>
+        </section>
 
-    <!-- ===== FOOTER ===== -->
+        <section id="contact">
+            <h2 class="section-title">Let’s plan your next launch</h2>
+            <p class="section-subtitle">Tell us about your goals and we’ll respond within one business day.</p>
+            <div class="contact-wrap">
+                <div class="panel">
+                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" rows="5" placeholder="Project details, timelines, or questions"></textarea>
+                        <button class="btn" type="submit">Send message</button>
+                    </form>
+                </div>
+                <div>
+                    <div class="stat" style="margin-bottom: 14px;">
+                        <h3>24h</h3>
+                        <p>Response time on new inquiries.</p>
+                    </div>
+                    <div class="stat">
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/923497588672" target="_blank" rel="noreferrer">Chat with our team instantly</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        © 2025 SANAN Marketing — All Rights Reserved.
+        © 2025 SANAN Marketing — Strategy, creative, and growth for modern brands.
     </footer>
-
 </body>
 </html>
