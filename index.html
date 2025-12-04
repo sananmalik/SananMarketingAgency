@@ -1,229 +1,333 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanan Marketing Agency | Future of Growth</title>
+    <title>Sanan Marketing Agency | Global Growth Architects</title>
     
-    <!-- FONTS -->
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <!-- FONTS: Syne (Display) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- TAILWIND CONFIG -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Clash Display', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Syne', 'sans-serif'],
                     },
                     colors: {
-                        background: '#050505',
-                        surface: '#0F0F0F',
-                        primary: '#6E44FF', 
-                        accent: '#B8FF01',
+                        background: '#030303',
+                        surface: '#0A0A0A',
+                        surfaceHighlight: '#1A1A1A',
+                        primary: '#6D28D9', // Deep Purple
+                        accent: '#22D3EE',  // Cyan
                     },
-                    animation: { 'blob': 'blob 7s infinite' },
-                    keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                     }
                 }
             }
         }
     </script>
 
-    <!-- REACT & LIBRARIES -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- REACT & BABEL -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- FRAMER MOTION -->
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     
+    <!-- LUCIDE ICONS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
-        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 8px; height: 8px; background-color: #B8FF01; }
-        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.5); transition: all 0.1s ease-out; }
-        /* Hide Scrollbar */
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        body { background-color: #030303; color: #fff; overflow-x: hidden; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6D28D9; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 20px rgba(109, 40, 217, 0.5);
+        }
     </style>
 </head>
 <body>
-    
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
+    <div id="root"></div>
 
-    <!-- ROOT CONTAINER -->
-    <div id="root" class="flex items-center justify-center min-h-screen text-gray-500">
-        Loading Sanan Experience...
-    </div>
-
-    <!-- CURSOR SCRIPT -->
-    <script>
-        const dot = document.getElementById("cursor-dot");
-        const outline = document.getElementById("cursor-outline");
-        window.addEventListener("mousemove", (e) => {
-            dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
-            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
-        });
-    </script>
-
-    <!-- REACT APPLICATION -->
     <script type="text/babel">
-        // SAFEGUARD: Ensure libraries are loaded
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
         const { motion, useScroll, useTransform, AnimatePresence } = window.Motion;
 
-        const ROLES = [
-            "Account Manager", "Strategy Lead", "Creative Director", "Art Director", 
-            "Graphic Designer", "Content Writer", "SEO Wizard", "Social Media",
-            "Paid Media", "PR Specialist", "Email Marketing", "Web Developer",
-            "Video Production", "Data Analyst", "Project Manager", "Head of Marketing",
-            "Client Executive", "Influencer Mgr", "UX/UI Designer"
+        // --- DATA: YOUR AGENCY ROLES GROUPED FOR UX ---
+        const TEAM_ROLES = [
+            {
+                category: "Leadership & Strategy",
+                roles: ["Marketing Director", "Creative Director", "Account Manager", "Project Manager", "Marketing Strategist", "Client Service Executive"]
+            },
+            {
+                category: "Creative & Content",
+                roles: ["Art Director", "Graphic Designer", "Video Production Specialist", "UX/UI Designer", "Content Writer/Copywriter"]
+            },
+            {
+                category: "Performance & Growth",
+                roles: ["SEO Specialist", "Paid Media Specialist", "Social Media Manager", "Email Marketing Specialist", "Influencer Marketing Manager"]
+            },
+            {
+                category: "Tech & Data",
+                roles: ["Web Developer", "Analytics Manager/Data Analyst", "Public Relations Specialist", "Event Coordinator"]
+            }
         ];
 
-        // --- ICONS (SVG) ---
-        const BrainIcon = () => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
-        );
-        const PaintIcon = () => (
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-        );
+        // --- COMPONENTS ---
 
         const Nav = () => (
             <motion.nav 
-                initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-                className="fixed w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference"
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                className="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center glass border-b-0"
             >
-                <div className="text-2xl font-display font-bold text-white tracking-tighter">
-                    SANAN<span className="text-accent">.</span>
+                <div className="text-2xl font-display font-bold tracking-tighter">
+                    SANAN<span className="text-primary">.</span>
                 </div>
-                <div className="hidden md:flex gap-8 text-sm font-mono text-gray-300">
-                    <a href="#" className="hover:text-accent uppercase tracking-widest">Work</a>
-                    <a href="#" className="hover:text-accent uppercase tracking-widest">Agency</a>
+                <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+                    <a href="#expertise" className="hover:text-white transition-colors">Expertise</a>
+                    <a href="#team" className="hover:text-white transition-colors">The Team</a>
+                    <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                 </div>
-                <a href="mailto:sanan.marketing@gmail.com" className="px-6 py-2 border border-white/20 rounded-full text-xs font-mono uppercase hover:bg-accent hover:text-black hover:border-accent transition-all duration-300">
-                    Start Project
+                <a href="mailto:sanan.marketing@gmail.com" className="bg-white text-black px-6 py-2 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-all duration-300">
+                    Let's Talk
                 </a>
             </motion.nav>
         );
 
         const Hero = () => {
-            const { scrollY } = useScroll();
-            const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-            
             return (
-                <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
-                    <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] animate-blob" />
-                    <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] animate-blob" />
+                <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden pt-20">
+                    {/* Background Ambient Glow */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
 
-                    <div className="z-10 text-center relative">
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mb-4">
-                            <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono uppercase tracking-[0.2em] text-accent">
-                                Est. 2025 • Global Agency
-                            </span>
-                        </motion.div>
-                        
-                        <motion.h1 
-                            initial={{ opacity: 0, y: 100 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1 }}
-                            className="text-[12vw] leading-[0.85] font-display font-bold tracking-tighter text-white"
-                        >
-                            SANAN
-                        </motion.h1>
-                        
-                        <motion.div style={{ y: y1 }} className="relative z-20 mt-[-2vw]">
-                            <h2 className="text-3xl md:text-5xl font-display font-medium text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">
-                                Marketing. Evolved.
-                            </h2>
-                        </motion.div>
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+                    >
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="text-xs uppercase tracking-widest text-gray-300">Accepting New Clients</span>
+                    </motion.div>
+
+                    <motion.h1 
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.8 }}
+                        className="text-5xl md:text-8xl font-display font-bold leading-tight z-10"
+                    >
+                        We Don't Just Market.<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent text-glow">
+                            We Dominate.
+                        </span>
+                    </motion.h1>
+
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                        className="mt-8 text-gray-400 text-lg md:text-xl max-w-2xl mx-auto z-10"
+                    >
+                        Sanan Marketing Agency fuses data-driven strategy with high-end creative. 
+                        We employ the top 1% of talent to scale your brand.
+                    </motion.p>
+
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="mt-10 flex gap-4 z-10"
+                    >
+                        <a href="#team" className="px-8 py-4 bg-primary text-white rounded-lg font-bold hover:bg-violet-600 transition shadow-[0_0_30px_rgba(109,40,217,0.4)]">
+                            Meet The Squad
+                        </a>
+                        <a href="#contact" className="px-8 py-4 border border-white/20 rounded-lg font-bold hover:bg-white/10 transition">
+                            Book Strategy Call
+                        </a>
+                    </motion.div>
+                </section>
+            );
+        };
+
+        const RoleCard = ({ role, index }) => (
+            <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group cursor-default"
+            >
+                <div className="w-2 h-2 bg-gray-600 rounded-full group-hover:bg-accent transition-colors duration-300"></div>
+                <span className="text-gray-300 font-medium group-hover:text-white transition-colors">{role}</span>
+            </motion.div>
+        );
+
+        const TeamSection = () => {
+            return (
+                <section id="team" className="py-24 px-6 relative border-t border-white/5 bg-surface">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="mb-16 md:flex justify-between items-end">
+                            <div>
+                                <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Our Arsenal</h2>
+                                <p className="text-gray-400 max-w-xl">
+                                    We have assembled a complete ecosystem of experts. From creative directors to data scientists, your growth is managed in-house.
+                                </p>
+                            </div>
+                            <div className="text-right hidden md:block">
+                                <span className="text-6xl font-display font-bold text-white/10">20+</span>
+                                <div className="text-sm text-gray-500 uppercase tracking-widest">Specialized Roles</div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {TEAM_ROLES.map((group, i) => (
+                                <motion.div 
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="p-6 rounded-2xl glass border border-white/5 hover:border-primary/30 transition duration-500"
+                                >
+                                    <h3 className="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">
+                                        {group.category}
+                                    </h3>
+                                    <div className="space-y-1">
+                                        {group.roles.map((role, idx) => (
+                                            <RoleCard key={idx} role={role} index={idx} />
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </section>
             );
         };
 
-        const Marquee = ({ direction = 1 }) => (
-            <div className="relative flex overflow-hidden py-4 bg-surface border-y border-white/5">
-                <motion.div 
-                    initial={{ x: 0 }}
-                    animate={{ x: direction > 0 ? "-50%" : "50%" }}
-                    transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
-                    className="flex whitespace-nowrap gap-16 items-center"
-                >
-                    {[...ROLES, ...ROLES].map((role, i) => (
-                        <span key={i} className="text-4xl font-display font-bold text-white/20 hover:text-accent transition-colors uppercase">
-                            {role}
-                        </span>
-                    ))}
-                </motion.div>
-            </div>
-        );
-
-        const BentoGrid = () => (
-            <section className="py-32 px-6 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <motion.div whileHover={{ scale: 0.98 }} className="rounded-3xl p-10 bg-[#0A0A0A] border border-white/10 relative overflow-hidden group">
-                        <div className="p-3 w-fit rounded-lg bg-white/5 text-primary mb-4"><BrainIcon /></div>
-                        <h3 className="text-3xl font-bold mb-2 text-white">Strategic Intelligence</h3>
-                        <p className="text-gray-400">Data-driven roadmaps managed by our Marketing Directors and Strategists.</p>
-                    </motion.div>
-
-                    <motion.div whileHover={{ scale: 0.98 }} className="rounded-3xl p-10 bg-[#0A0A0A] border border-white/10 relative overflow-hidden group">
-                        <div className="p-3 w-fit rounded-lg bg-white/5 text-accent mb-4"><PaintIcon /></div>
-                        <h3 className="text-3xl font-bold mb-2 text-white">Visual Supremacy</h3>
-                        <p className="text-gray-400">World-class design from our Creative Directors and UI/UX experts.</p>
-                    </motion.div>
+        const TechStack = () => (
+            <section className="py-20 border-y border-white/5 bg-black overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 text-center mb-10">
+                    <span className="text-accent text-sm font-bold tracking-widest uppercase">Powered By Modern Tech</span>
+                </div>
+                <div className="flex justify-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap px-6">
+                    {/* Simple Text Placeholders for Tech Logos to keep code clean */}
+                    <span className="text-2xl font-bold font-display">React</span>
+                    <span className="text-2xl font-bold font-display">Next.js</span>
+                    <span className="text-2xl font-bold font-display">Shopify Plus</span>
+                    <span className="text-2xl font-bold font-display">Google Ads AI</span>
+                    <span className="text-2xl font-bold font-display">Meta</span>
                 </div>
             </section>
         );
 
-        const Footer = () => {
+        const Contact = () => {
             const [copied, setCopied] = useState(false);
+
+            const copyEmail = () => {
+                navigator.clipboard.writeText("sanan.marketing@gmail.com");
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            }
+
             return (
-                <section className="py-32 px-4 text-center border-t border-white/10 bg-[#020202]">
-                    <p className="text-accent font-mono mb-8 uppercase tracking-widest">Ready to scale?</p>
-                    <div 
-                        onClick={() => {
-                            navigator.clipboard.writeText("sanan.marketing@gmail.com");
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        }}
-                        className="cursor-pointer inline-block"
-                    >
-                        <h2 className="text-5xl md:text-7xl font-display font-bold text-white hover:text-gray-300 transition-colors">
-                            sanan.marketing<br/>@gmail.com
-                        </h2>
-                        {copied && <span className="text-accent font-mono mt-4 block">COPIED TO CLIPBOARD</span>}
+                <section id="contact" className="py-32 px-6 relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-surface to-black -z-10" />
+                    
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.h2 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            className="text-5xl md:text-7xl font-display font-bold mb-8"
+                        >
+                            Ready to <span className="text-primary">Scale?</span>
+                        </motion.h2>
+                        <p className="text-xl text-gray-400 mb-12">
+                            You have the vision. We have the team. <br/>
+                            Let's build something impossible.
+                        </p>
+
+                        <div className="flex flex-col md:flex-row justify-center gap-6 items-center">
+                            <motion.button 
+                                whileHover={{ scale: 1.05 }}
+                                onClick={copyEmail}
+                                className="group relative px-8 py-5 rounded-2xl bg-surfaceHighlight border border-white/10 flex items-center gap-4 hover:border-accent/50 transition-all w-full md:w-auto justify-center"
+                            >
+                                <div className="text-left">
+                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Email Us Directly</div>
+                                    <div className="text-lg font-mono text-white">sanan.marketing@gmail.com</div>
+                                </div>
+                                <div className="p-2 bg-white/5 rounded-lg text-gray-400 group-hover:text-accent group-hover:bg-accent/10 transition">
+                                    {copied ? "✓" : "📋"}
+                                </div>
+                            </motion.button>
+                        </div>
+
+                        <form className="mt-16 text-left max-w-xl mx-auto grid gap-4 p-8 glass rounded-3xl border border-white/5">
+                            <h3 className="text-white font-bold text-xl mb-4">Fast Inquiry</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Name" className="bg-black/50 border border-white/10 rounded-lg p-4 text-white focus:border-primary outline-none transition" />
+                                <input type="email" placeholder="Email" className="bg-black/50 border border-white/10 rounded-lg p-4 text-white focus:border-primary outline-none transition" />
+                            </div>
+                            <textarea placeholder="Tell us about your project goals..." rows="4" className="bg-black/50 border border-white/10 rounded-lg p-4 text-white focus:border-primary outline-none transition"></textarea>
+                            <button className="w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-primary hover:text-white transition duration-300">Send Request</button>
+                        </form>
                     </div>
                 </section>
             );
         };
 
-        const App = () => (
-            <main className="antialiased selection:bg-accent selection:text-black">
-                <Nav />
-                <Hero />
-                <div className="py-20">
-                    <Marquee direction={1} />
-                    <div className="h-4"></div>
-                    <Marquee direction={-1} />
-                </div>
-                <BentoGrid />
-                <Footer />
-            </main>
+        const Footer = () => (
+            <footer className="py-10 border-t border-white/10 text-center text-gray-600 text-sm">
+                <div className="mb-4 text-2xl font-display font-bold text-white/20">SANAN.</div>
+                <p>&copy; 2025 Sanan Marketing Agency. All rights reserved.</p>
+                <p className="mt-2">Islamabad • Dubai • New York</p>
+            </footer>
         );
+
+        const App = () => {
+            return (
+                <div className="antialiased selection:bg-primary selection:text-white">
+                    <Nav />
+                    <Hero />
+                    <TechStack />
+                    <TeamSection />
+                    <Contact />
+                    <Footer />
+                </div>
+            );
+        };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
+    </script>
+    
+    <!-- ICONS INITIALIZER -->
+    <script>
+        lucide.createIcons();
     </script>
 </body>
 </html>
