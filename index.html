@@ -92,6 +92,38 @@
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
         };
 
+        // --- DATA: DETAILED SERVICES ---
+        const SERVICE_CATEGORIES = [
+            {
+                title: "Digital Growth & Ads",
+                icon: "🚀",
+                desc: "We turn strangers into customers using precise targeting and psychology.",
+                features: ["Paid Media (Meta/Google)", "Social Media Management", "Influencer Marketing", "Conversion Optimization"],
+                cta: "Scale Revenue"
+            },
+            {
+                title: "Brand & Creative",
+                icon: "🎨",
+                desc: "Visual identity that dominates the market and sticks in the mind.",
+                features: ["Logo & Identity Systems", "Graphic Design", "Video Production", "Creative Direction"],
+                cta: "Build Brand"
+            },
+            {
+                title: "Web & Development",
+                icon: "💻",
+                desc: "Lightning-fast, SEO-optimized digital infrastructure.",
+                features: ["Custom Web Development", "UI/UX Design", "E-Commerce Solutions", "Technical SEO Audits"],
+                cta: "Upgrade Site"
+            },
+            {
+                title: "Strategy & Content",
+                icon: "🧠",
+                desc: "The voice and brain behind your brand's operations.",
+                features: ["Marketing Strategy Maps", "SEO Content Writing", "Email Marketing Flows", "PR & Crisis Management"],
+                cta: "Get Strategy"
+            }
+        ];
+
         // --- COMPONENTS ---
 
         const GlobalBackground = () => (
@@ -111,14 +143,13 @@
                         initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
                         className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#020202]/70 backdrop-blur-xl border-b border-white/5"
                     >
-                        <a href="#" className="text-2xl font-display font-bold tracking-tight text-white relative z-50">
+                        <a href="#home" className="text-2xl font-display font-bold tracking-tight text-white relative z-50">
                             SANAN<span className="text-primary">.</span>
                         </a>
                         
-                        {/* LINK UPDATES: Pointing to services.html */}
                         <div className="hidden md:flex gap-10 text-sm font-medium text-gray-400">
-                            <a href="#" className="text-white font-bold">Home</a>
-                            <a href="services.html" className="hover:text-white transition-colors">Services</a>
+                            <a href="#home" className="hover:text-white transition-colors">Home</a>
+                            <a href="#services" className="hover:text-white transition-colors">Services</a>
                             <a href="#work" className="hover:text-white transition-colors">Work</a>
                             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                         </div>
@@ -126,7 +157,7 @@
                         <div className="hidden md:block">
                             <motion.a 
                                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                                href="services.html#quote" 
+                                href="#contact" 
                                 className="px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all"
                             >
                                 Get Started
@@ -148,8 +179,8 @@
                                 initial={{ opacity: 0, x: "100%" }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: "100%" }}
                                 className="fixed inset-0 bg-[#020202] z-40 flex flex-col justify-center items-center gap-8 md:hidden"
                             >
-                                <a href="#" className="text-4xl font-display font-bold text-white">Home</a>
-                                <a href="services.html" className="text-4xl font-display font-bold text-white">Services</a>
+                                <a href="#home" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Home</a>
+                                <a href="#services" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Services</a>
                                 <a href="#work" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Work</a>
                                 <a href="#contact" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Contact</a>
                             </motion.div>
@@ -186,9 +217,8 @@
                                 Marketing Evolved
                             </h2>
                             
-                            {/* LINK UPDATE: Pointing to services.html */}
                             <motion.a 
-                                href="services"
+                                href="#services"
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
                                 className="mt-12 inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-sm hover:bg-white hover:text-black transition-all duration-300"
                             >
@@ -200,43 +230,69 @@
             );
         };
 
-        // Keeps a small preview on homepage, but "View All" goes to services.html
-        const ServicesPreview = () => (
-            <section className="py-32 px-6">
+        // --- DETAILED SERVICES SECTION ---
+        const Services = () => (
+            <section id="services" className="py-32 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex justify-between items-end mb-16">
-                         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                            <span className="text-accent text-xs font-bold tracking-widest uppercase">Capabilities</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-bold mt-4 text-white">What We Do</h2>
-                        </motion.div>
-                        <a href="services.html" className="hidden md:block text-sm border-b border-gray-600 pb-1 hover:text-accent hover:border-accent transition">View All Services</a>
-                    </div>
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp} className="mb-20">
+                        <span className="text-accent text-xs font-bold tracking-widest uppercase">Our Capabilities</span>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold mt-4 text-white">Full-Service Ecosystem</h2>
+                    </motion.div>
 
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {[
-                            { id: "01", title: "Strategy & Growth", desc: "Data-driven roadmaps." },
-                            { id: "02", title: "Creative & Brand", desc: "Award-winning visuals." },
-                            { id: "03", title: "Performance Ads", desc: "ROI-focused campaigns." },
-                            { id: "04", title: "Web Development", desc: "High-speed infrastructure." }
-                        ].map((service, index) => (
-                            <motion.a 
-                                href="services.html" // Link to full page
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {SERVICE_CATEGORIES.map((cat, index) => (
+                            <motion.div 
                                 key={index} variants={fadeInUp}
                                 whileHover={{ y: -5 }}
-                                className="glass-panel p-10 rounded-2xl group transition-all hover:border-primary/50 block"
+                                className="glass-panel p-8 md:p-12 rounded-3xl group transition-all hover:border-primary/50"
                             >
-                                <div className="flex justify-between items-start mb-6">
-                                    <span className="text-5xl font-display font-bold text-white/10 group-hover:text-white/30 transition-colors">{service.id}</span>
-                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary">→</div>
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
-                                <p className="text-gray-400">{service.desc}</p>
-                            </motion.a>
+                                <div className="text-4xl mb-6 bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center">{cat.icon}</div>
+                                <h3 className="text-3xl font-display font-bold mb-4">{cat.title}</h3>
+                                <p className="text-gray-400 mb-8 text-lg leading-relaxed">{cat.desc}</p>
+                                
+                                <ul className="space-y-3 mb-10 border-t border-white/10 pt-6">
+                                    {cat.features.map((feat, i) => (
+                                        <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
+                                            <span className="text-accent">✓</span> {feat}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <a href="#contact" className="inline-flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors">
+                                    {cat.cta} <span>→</span>
+                                </a>
+                            </motion.div>
                         ))}
                     </motion.div>
-                    
-                    <div className="mt-8 text-center md:hidden">
-                         <a href="services.html" className="text-sm border-b border-gray-600 pb-1">View All Services</a>
+                </div>
+            </section>
+        );
+
+        // --- SEO PROCESS SECTION ---
+        const ProcessSection = () => (
+            <section className="py-24 px-6 bg-black/40 border-y border-white/5">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                        <span className="text-secondary text-xs font-bold tracking-widest uppercase">Methodology</span>
+                        <h2 className="text-4xl font-display font-bold mt-2">How We Win</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} className="p-6">
+                            <div className="text-6xl font-display font-bold text-white/10 mb-4">01</div>
+                            <h4 className="text-xl font-bold mb-2">Audit & Strategy</h4>
+                            <p className="text-gray-500 text-sm">We deep dive into your market gaps before spending a dollar.</p>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="p-6">
+                            <div className="text-6xl font-display font-bold text-white/10 mb-4">02</div>
+                            <h4 className="text-xl font-bold mb-2">Execution</h4>
+                            <p className="text-gray-500 text-sm">Deploying high-quality content and ads optimized for speed.</p>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="p-6">
+                            <div className="text-6xl font-display font-bold text-white/10 mb-4">03</div>
+                            <h4 className="text-xl font-bold mb-2">Scale</h4>
+                            <p className="text-gray-500 text-sm">Data doesn't lie. We refine campaigns weekly to ensure ROI climbs.</p>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -283,13 +339,32 @@
                         <motion.div 
                             initial={{ y: 50, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}
                             onClick={() => { navigator.clipboard.writeText("sanan.marketing@gmail.com"); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-                            className="group cursor-pointer inline-block relative"
+                            className="group cursor-pointer inline-block relative mb-16"
                         >
                             <h2 className="text-4xl md:text-8xl font-display font-bold text-white hover:text-gray-300 transition-colors">sanan.marketing<br/>@gmail.com</h2>
                             <AnimatePresence>
                                 {copied && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-mono text-primary">Copied to clipboard!</motion.div>}
                             </AnimatePresence>
                         </motion.div>
+
+                        {/* Quote Form */}
+                        <motion.form initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} className="max-w-2xl mx-auto glass-panel p-8 rounded-2xl text-left space-y-4">
+                            <h3 className="text-2xl font-bold mb-4">Request a Quote</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Name" className="w-full bg-black/50 border border-white/10 p-4 rounded-lg text-white focus:border-accent outline-none" />
+                                <input type="email" placeholder="Email" className="w-full bg-black/50 border border-white/10 p-4 rounded-lg text-white focus:border-accent outline-none" />
+                            </div>
+                            <select className="w-full bg-black/50 border border-white/10 p-4 rounded-lg text-gray-400 focus:border-accent outline-none">
+                                <option>What service do you need?</option>
+                                <option>Digital Marketing / Ads</option>
+                                <option>Web Design / Development</option>
+                                <option>Branding / Creative</option>
+                                <option>Full Agency Retainer</option>
+                            </select>
+                            <button className="w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-primary hover:text-white transition-all shadow-lg">
+                                Send Inquiry
+                            </button>
+                        </motion.form>
                     </div>
                 </section>
             );
@@ -330,7 +405,8 @@
                 <GlobalBackground />
                 <Nav />
                 <Hero />
-                <ServicesPreview />
+                <Services />
+                <ProcessSection />
                 <Portfolio />
                 <Contact />
                 <Footer />
