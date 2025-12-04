@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanan Marketing Agency | Global Growth Architects</title>
+    <meta name="description" content="Sanan Marketing Agency - A full-service digital agency specializing in SEO, Paid Media, Branding, and Web Development.">
     
     <!-- FONTS -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
@@ -49,14 +50,12 @@
     <style>
         body { background-color: #020202; color: #ffffff; overflow-x: hidden; }
         
-        /* Fixed Background Texture */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 50; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
         }
         
-        /* Grid Pattern */
         .tech-grid {
             background-size: 50px 50px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -64,7 +63,6 @@
             mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
-        /* Glass Card Utility */
         .glass-panel {
             background: rgba(10, 10, 10, 0.6);
             backdrop-filter: blur(12px);
@@ -96,11 +94,9 @@
 
         // --- COMPONENTS ---
 
-        // 1. GLOBAL BACKGROUND (FIXED)
         const GlobalBackground = () => (
             <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#020202]">
                 <div className="absolute inset-0 tech-grid z-10 opacity-50"></div>
-                {/* Floating Blobs */}
                 <div className="absolute top-[-10%] left-[-10%] w-[900px] h-[900px] bg-primary/20 rounded-full blur-[150px] animate-float opacity-50"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] bg-secondary/10 rounded-full blur-[120px] animate-float-delayed opacity-40"></div>
                 <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] animate-pulse"></div>
@@ -115,23 +111,22 @@
                         initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
                         className="fixed w-full z-50 px-6 py-5 flex justify-between items-center bg-[#020202]/70 backdrop-blur-xl border-b border-white/5"
                     >
-                        <a href="#home" className="text-2xl font-display font-bold tracking-tight text-white relative z-50">
+                        <a href="#" className="text-2xl font-display font-bold tracking-tight text-white relative z-50">
                             SANAN<span className="text-primary">.</span>
                         </a>
                         
+                        {/* LINK UPDATES: Pointing to services.html */}
                         <div className="hidden md:flex gap-10 text-sm font-medium text-gray-400">
-                            {['Home', 'Services', 'Work', 'Contact'].map((item) => (
-                                <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors relative group">
-                                    {item}
-                                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
-                                </a>
-                            ))}
+                            <a href="#" className="text-white font-bold">Home</a>
+                            <a href="services.html" className="hover:text-white transition-colors">Services</a>
+                            <a href="#work" className="hover:text-white transition-colors">Work</a>
+                            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                         </div>
                         
                         <div className="hidden md:block">
                             <motion.a 
                                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                                href="#contact" 
+                                href="services.html#quote" 
                                 className="px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all"
                             >
                                 Get Started
@@ -153,11 +148,10 @@
                                 initial={{ opacity: 0, x: "100%" }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: "100%" }}
                                 className="fixed inset-0 bg-[#020202] z-40 flex flex-col justify-center items-center gap-8 md:hidden"
                             >
-                                {['Home', 'Services', 'Work', 'Contact'].map((item) => (
-                                    <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white hover:text-accent transition-colors">
-                                        {item}
-                                    </a>
-                                ))}
+                                <a href="#" className="text-4xl font-display font-bold text-white">Home</a>
+                                <a href="services.html" className="text-4xl font-display font-bold text-white">Services</a>
+                                <a href="#work" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Work</a>
+                                <a href="#contact" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Contact</a>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -191,48 +185,59 @@
                             <h2 className="text-xl md:text-3xl font-sans font-light tracking-[0.5em] uppercase text-gray-300 ml-2">
                                 Marketing Evolved
                             </h2>
+                            
+                            {/* LINK UPDATE: Pointing to services.html */}
+                            <motion.a 
+                                href="services.html"
+                                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                                className="mt-12 inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-sm hover:bg-white hover:text-black transition-all duration-300"
+                            >
+                                Explore Ecosystem <span>→</span>
+                            </motion.a>
                         </motion.div>
                     </div>
                 </section>
             );
         };
 
-        const Services = () => (
-            <section id="services" className="py-32 px-6">
+        // Keeps a small preview on homepage, but "View All" goes to services.html
+        const ServicesPreview = () => (
+            <section className="py-32 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp} className="mb-20">
-                        <span className="text-accent text-xs font-bold tracking-widest uppercase">What We Do</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-bold mt-4 text-white">Full-Service Ecosystem</h2>
-                    </motion.div>
+                    <div className="flex justify-between items-end mb-16">
+                         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                            <span className="text-accent text-xs font-bold tracking-widest uppercase">Capabilities</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-bold mt-4 text-white">What We Do</h2>
+                        </motion.div>
+                        <a href="services.html" className="hidden md:block text-sm border-b border-gray-600 pb-1 hover:text-accent hover:border-accent transition">View All Services</a>
+                    </div>
 
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {[
-                            { id: "01", title: "Strategy & Leadership", desc: "We build the roadmap before we drive.", roles: ["Marketing Director", "Strategist", "Account Manager"] },
-                            { id: "02", title: "Creative & Identity", desc: "Visuals that stop the scroll.", roles: ["Creative Director", "Art Director", "Graphic Designer"] },
-                            { id: "03", title: "Growth & Performance", desc: "Campaigns that generate revenue.", roles: ["Paid Media", "SEO Specialist", "Social Media Manager"] },
-                            { id: "04", title: "Tech & Data", desc: "Infrastructure that scales with you.", roles: ["Web Developer", "Data Analyst", "PR Specialist"] }
+                            { id: "01", title: "Strategy & Growth", desc: "Data-driven roadmaps." },
+                            { id: "02", title: "Creative & Brand", desc: "Award-winning visuals." },
+                            { id: "03", title: "Performance Ads", desc: "ROI-focused campaigns." },
+                            { id: "04", title: "Web Development", desc: "High-speed infrastructure." }
                         ].map((service, index) => (
-                            <motion.div 
+                            <motion.a 
+                                href="services.html" // Link to full page
                                 key={index} variants={fadeInUp}
                                 whileHover={{ y: -5 }}
-                                className="glass-panel p-10 rounded-2xl group transition-all hover:border-primary/50"
+                                className="glass-panel p-10 rounded-2xl group transition-all hover:border-primary/50 block"
                             >
                                 <div className="flex justify-between items-start mb-6">
                                     <span className="text-5xl font-display font-bold text-white/10 group-hover:text-white/30 transition-colors">{service.id}</span>
-                                    <motion.div whileHover={{ rotate: 90 }} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </motion.div>
+                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary">→</div>
                                 </div>
                                 <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
-                                <p className="text-gray-400 mb-8 h-12">{service.desc}</p>
-                                <div className="flex flex-wrap gap-2 pt-6 border-t border-white/10">
-                                    {service.roles.map((role, i) => (
-                                        <span key={i} className="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 border border-white/5">{role}</span>
-                                    ))}
-                                </div>
-                            </motion.div>
+                                <p className="text-gray-400">{service.desc}</p>
+                            </motion.a>
                         ))}
                     </motion.div>
+                    
+                    <div className="mt-8 text-center md:hidden">
+                         <a href="services.html" className="text-sm border-b border-gray-600 pb-1">View All Services</a>
+                    </div>
                 </div>
             </section>
         );
@@ -245,7 +250,6 @@
                             <span className="text-primary text-xs font-bold tracking-widest uppercase">Our Work</span>
                             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">Selected Cases</h2>
                         </div>
-                        <a href="#contact" className="hidden md:block text-sm text-gray-400 border-b border-gray-600 pb-1 hover:text-white hover:border-white transition">Start your project</a>
                     </motion.div>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-3 gap-8">
@@ -256,7 +260,6 @@
                         ].map((item, i) => (
                             <motion.div key={i} variants={fadeInUp} className="group cursor-pointer">
                                 <div className="glass-panel h-80 w-full rounded-xl overflow-hidden mb-6 relative hover:border-white/20 transition-all duration-500">
-                                    {/* Placeholder Gradient representing image */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent"></div>
                                     <div className="absolute bottom-6 left-6 z-20">
                                         <h4 className={`text-xl font-bold text-white group-hover:${item.color} transition-colors`}>{item.title}</h4>
@@ -287,11 +290,6 @@
                                 {copied && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-mono text-primary">Copied to clipboard!</motion.div>}
                             </AnimatePresence>
                         </motion.div>
-
-                        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-16 max-w-md mx-auto">
-                            <input type="email" placeholder="Your Email Address" className="w-full glass-panel border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary transition mb-4" />
-                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full bg-white text-black font-bold rounded-lg p-4 hover:bg-primary hover:text-white transition-all">Send Inquiry</motion.button>
-                        </motion.div>
                     </div>
                 </section>
             );
@@ -318,13 +316,9 @@
                     </div>
                     
                     <div className="flex gap-4">
-                        {/* LinkedIn */}
                         <SocialLink path={<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>}/>
-                        {/* Instagram */}
                         <SocialLink path={<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>}/>
-                        {/* Twitter / X */}
                         <SocialLink path={<path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>}/>
-                        {/* Facebook */}
                         <SocialLink path={<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>}/>
                     </div>
                 </div>
@@ -336,7 +330,7 @@
                 <GlobalBackground />
                 <Nav />
                 <Hero />
-                <Services />
+                <ServicesPreview />
                 <Portfolio />
                 <Contact />
                 <Footer />
