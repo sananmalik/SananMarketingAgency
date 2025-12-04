@@ -1,278 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- ===== Meta & SEO ===== -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SANAN Marketing – Digital Marketing Agency</title>
-    <meta name="description" content="Sanan Marketing helps businesses grow through social media marketing, branding, websites, and digital strategy.">
-
-    <!-- ===== Open Graph (Facebook Share) ===== -->
-    <meta property="og:title" content="SANAN Marketing – Grow Your Brand" />
-    <meta property="og:description" content="Smart digital marketing solutions to grow your business." />
-    <meta property="og:image" content="https://sananmarketing.com/og-image.jpg" />
-    <meta property="og:url" content="https://sananmarketing.com" />
-    <meta property="og:type" content="website" />
-
-    <!-- ===== Favicon ===== -->
-    <link rel="icon" href="logo.png" />
-
-    <!-- ===== Google Fonts ===== -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- ===== Styles ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanan Marketing Agency | Grow Your Brand</title>
     <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #0f172a; /* Deep Navy Background */
+            --accent-color: #3b82f6; /* Electric Blue */
+            --accent-hover: #2563eb;
+            --text-light: #f8fafc;
+            --text-gray: #94a3b8;
+            --card-bg: #1e293b;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
-            font-family: "Poppins", sans-serif;
             box-sizing: border-box;
         }
 
         body {
-            background: #0d1117;
-            color: white;
+            font-family: var(--font-main);
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- HEADER & NAVIGATION --- */
         header {
+            position: fixed;
+            top: 0;
             width: 100%;
-            padding: 20px 10%;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            top: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            z-index: 999;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        header h2 {
-            font-weight: 700;
-            color: #58a6ff;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-light);
+        }
+        .logo span { color: var(--accent-color); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
 
-        header nav a {
-            margin-left: 25px;
-            text-decoration: none;
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .nav-links a:hover { color: var(--accent-color); }
+
+        .cta-btn {
+            background-color: var(--accent-color);
             color: white;
-            font-weight: 400;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+        
+        .cta-btn:hover {
+            background-color: transparent;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+        /* --- HERO SECTION --- */
         .hero {
-            padding-top: 120px;
-            height: 90vh;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            opacity: 0; /* Animation Start */
+            transform: translateY(20px);
+            animation: fadeUp 1s forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header span {
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        /* --- SERVICES --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .service-card h3 { margin-bottom: 1rem; font-size: 1.25rem; }
+        .service-card p { color: var(--text-gray); font-size: 0.95rem; }
+
+        /* --- PORTFOLIO --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #334155; /* Placeholder color */
+            cursor: pointer;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background: linear-gradient(to bottom, #0d1117, #111827);
+            opacity: 0;
+            transition: var(--transition);
         }
 
-        .hero h1 {
-            font-size: 50px;
-            font-weight: 700;
-            color: #58a6ff;
-        }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
 
-        .hero p {
-            margin-top: 15px;
-            font-size: 18px;
-            width: 60%;
-            opacity: 0.8;
-        }
-
-        .btn {
-            margin-top: 25px;
-            padding: 12px 25px;
-            background: #58a6ff;
-            border-radius: 6px;
-            text-decoration: none;
-            color: black;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: white;
-        }
-
-        /* ===== Sections ===== */
-        section {
-            padding: 80px 10%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: #58a6ff;
-        }
-
-        .services {
+        /* --- CONTACT --- */
+        .contact-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .service-box {
-            padding: 25px;
-            background: #161b22;
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            transition: 0.3s;
-        }
-
-        .service-box:hover {
-            transform: translateY(-5px);
-            border-color: #58a6ff;
-        }
-
-        .service-box h3 {
-            margin-bottom: 10px;
-            color: #58a6ff;
-        }
-
-        /* ===== Contact Form ===== */
-        .contact-box {
-            background: #161b22;
-            padding: 40px;
-            border-radius: 12px;
-            width: 60%;
-            margin: auto;
-            border: 1px solid #30363d;
-        }
-
-        input,
-        textarea {
+        .contact-form input, .contact-form textarea {
             width: 100%;
-            margin-bottom: 15px;
-            background: black;
-            border: 1px solid #30363d;
-            padding: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-family: inherit;
         }
 
-        input:focus,
-        textarea:focus {
-            border-color: #58a6ff;
-            outline: none;
+        .contact-form textarea { height: 150px; resize: none; }
+        
+        .contact-form button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        /* ===== Footer ===== */
+        .contact-form button:hover { background-color: var(--accent-hover); }
+
+        /* --- FOOTER --- */
         footer {
-            text-align: center;
-            padding: 20px;
-            background: #111827;
-            color: #777;
+            background-color: var(--card-bg);
+            padding: 4rem 5% 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        @media(max-width: 768px) {
-            .hero p {
-                width: 90%;
-            }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
 
-            .contact-box {
-                width: 90%;
+        .footer-logo h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .footer-links h4 { margin-bottom: 1rem; color: var(--text-light); }
+        .footer-links ul li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-gray); }
+        .footer-links a:hover { color: var(--accent-color); }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links {
+                display: none; /* Hide Desktop Menu */
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background-color: var(--card-bg);
+                width: 100%;
+                padding: 2rem;
+                text-align: center;
             }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+            .contact-container { grid-template-columns: 1fr; }
+        }
+
+        /* --- ANIMATION KEYFRAMES --- */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
-
-    <!-- ===== FB META PIXEL (ADVANCED MODE) ===== -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;
-            n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID_HERE', {
-            em: 'email@example.com',
-            ph: '+923497588672',
-        });
-        fbq('track', 'PageView');
-    </script>
 </head>
-
 <body>
 
-    <!-- ===== HEADER ===== -->
+    <!-- NAVIGATION -->
     <header>
-        <h2>SANAN MARKETING</h2>
         <nav>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
-            <a href="https://wa.me/923497588672" target="_blank">WhatsApp</a>
+            <div class="logo">Sanan<span>.</span></div>
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact" class="cta-btn">Get Started</a></li>
+            </ul>
         </nav>
     </header>
 
-    <!-- ===== HERO ===== -->
-    <div class="hero">
-        <h1>We Build Brands That Grow</h1>
-        <p>We help businesses expand through smart social media strategy, branding, website development, and digital marketing excellence.</p>
-        <a class="btn" href="https://wa.me/923497588672">Start Your Project</a>
-    </div>
-
-    <!-- ===== ABOUT ===== -->
-    <section>
-        <h2 class="section-title">About Us</h2>
-        <p style="text-align:center; width:70%; margin:auto; opacity:0.8;">
-            Sanan Marketing is a full-service digital marketing agency helping brands grow through creative strategy, storytelling, 
-            and performance-based digital campaigns. We combine design, marketing, and analytics to deliver real business results.
-        </p>
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Elevate Your Brand With <br> Data-Driven Marketing</h1>
+            <p>Sanan Marketing Agency combines creativity with analytics to scale your business to new heights.</p>
+            <a href="#contact" class="cta-btn">Book a Free Strategy Call</a>
+        </div>
     </section>
 
-    <!-- ===== SERVICES ===== -->
+    <!-- SERVICES SECTION -->
     <section id="services">
-        <h2 class="section-title">Our Services</h2>
-
-        <div class="services">
-            <div class="service-box">
-                <h3>Social Media Marketing</h3>
-                <p>Full management of Facebook, Instagram, TikTok, and ads for business growth.</p>
+        <div class="section-header">
+            <span>Our Expertise</span>
+            <h2>How We Help You Grow</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3>Digital Strategy</h3>
+                <p>Comprehensive roadmaps tailored to your business goals, ensuring every dollar spent delivers ROI.</p>
             </div>
-
-            <div class="service-box">
-                <h3>Branding & Design</h3>
-                <p>Logo design, brand identity, visual guidelines, and marketing content.</p>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Social Media</h3>
+                <p>Engage your audience where they live. We manage content, community, and paid ads on all platforms.</p>
             </div>
-
-            <div class="service-box">
-                <h3>Website Development</h3>
-                <p>Fast, modern, SEO-optimized websites designed to convert customers.</p>
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h3>SEO & Content</h3>
+                <p>Rank higher and drive organic traffic with high-quality content and technical SEO optimization.</p>
             </div>
-
-            <div class="service-box">
-                <h3>Content Creation</h3>
-                <p>Professional posts, videos, reels, and ad creatives for all platforms.</p>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Brand Identity</h3>
+                <p>From logos to visual languages, we build memorable brands that stand out in crowded markets.</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
-    <section id="contact">
-        <h2 class="section-title">Contact Us</h2>
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio">
+        <div class="section-header">
+            <span>Recent Work</span>
+            <h2>Featured Case Studies</h2>
+        </div>
+        <div class="portfolio-grid">
+            <!-- Placeholders for Project Images -->
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <h3>TechStartup Launch</h3>
+                    <p>Branding & PPC</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <h3>E-Commerce Scale</h3>
+                    <p>SEO & Email Marketing</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <h3>Local Business Revamp</h3>
+                    <p>Web Design & Socials</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <div class="contact-box">
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required />
-                <input type="email" name="email" placeholder="Your Email" required />
-                <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-                <button class="btn" type="submit">Send Message</button>
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                    <span>Contact Us</span>
+                    <h2>Let's Start a Project</h2>
+                </div>
+                <p style="color: var(--text-gray); margin-bottom: 2rem;">
+                    Ready to take your marketing to the next level? Fill out the form or email us directly at <strong>hello@sananagency.com</strong>.
+                </p>
+                <ul style="color: var(--text-gray);">
+                    <li style="margin-bottom: 1rem;">📍 123 Business Ave, Tech City</li>
+                    <li style="margin-bottom: 1rem;">📞 +1 (555) 123-4567</li>
+                </ul>
+            </div>
+
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Tell us about your project..." required></textarea>
+                <button type="submit">Send Message</button>
             </form>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer>
-        © 2025 SANAN Marketing — All Rights Reserved.
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Sanan<span>.</span></h2>
+                <p style="color: var(--text-gray); max-width: 300px;">Helping brands find their voice in a digital world.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 Sanan Marketing Agency. All Rights Reserved.
+        </div>
     </footer>
 
+    <!-- JAVASCRIPT FOR INTERACTIVITY -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link (Mobile UX)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth Scroll for Anchor Links (Optional compatibility fix)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
