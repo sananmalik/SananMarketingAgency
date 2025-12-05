@@ -370,17 +370,20 @@
             );
         };
 
-        const SocialLink = ({ path, viewBox = "0 0 24 24" }) => (
-            <motion.a 
-                href="#"
-                whileHover={{ scale: 1.1, color: "#B8FF01", borderColor: "#B8FF01" }}
-                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-400 transition-colors glass-panel"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox={viewBox} fill="currentColor">
-                    {path}
-                </svg>
-            </motion.a>
-        );
+// Replace the existing SocialLink component with this:
+const SocialLink = ({ href, path, viewBox = "0 0 24 24" }) => (
+    <motion.a 
+        href={href} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.1, color: "#B8FF01", borderColor: "#B8FF01" }}
+        className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-400 transition-colors glass-panel"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox={viewBox} fill="currentColor">
+            {path}
+        </svg>
+    </motion.a>
+);
 
     const Footer = () => (
     <footer className="py-12 border-t border-white/5 relative z-10 bg-black/40 backdrop-blur-lg">
