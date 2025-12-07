@@ -92,32 +92,65 @@
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
         };
 
-        // --- DATA: DETAILED SERVICES ---
+        // --- ICONS (New High-End SVGs) ---
+        const Icons = {
+            Growth: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 7L13.5 15.5L8.5 10.5L2 17" />
+                    <path d="M16 7H22V13" />
+                </svg>
+            ),
+            Creative: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                    <path d="M2 2l7.586 7.586" />
+                    <circle cx="11" cy="11" r="2" />
+                </svg>
+            ),
+            Web: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                    <path d="M7 8 L10 11 L7 14" />
+                    <line x1="13" y1="14" x2="17" y2="14" />
+                </svg>
+            ),
+            Strategy: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                </svg>
+            )
+        };
+
+        // --- DATA: DETAILED SERVICES (Updated with Icons) ---
         const SERVICE_CATEGORIES = [
             {
                 title: "Digital Growth & Ads",
-                icon: "🚀",
+                icon: <Icons.Growth />,
                 desc: "We turn strangers into customers using precise targeting and psychology.",
                 features: ["Paid Media (Meta/Google)", "Social Media Management", "Influencer Marketing", "Conversion Optimization"],
                 cta: "Scale Revenue"
             },
             {
                 title: "Brand & Creative",
-                icon: "🎨",
+                icon: <Icons.Creative />,
                 desc: "Visual identity that dominates the market and sticks in the mind.",
                 features: ["Logo & Identity Systems", "Graphic Design", "Video Production", "Creative Direction"],
                 cta: "Build Brand"
             },
             {
                 title: "Web & Development",
-                icon: "💻",
+                icon: <Icons.Web />,
                 desc: "Lightning-fast, SEO-optimized digital infrastructure.",
                 features: ["Custom Web Development", "UI/UX Design", "E-Commerce Solutions", "Technical SEO Audits"],
                 cta: "Upgrade Site"
             },
             {
                 title: "Strategy & Content",
-                icon: "🧠",
+                icon: <Icons.Strategy />,
                 desc: "The voice and brain behind your brand's operations.",
                 features: ["Marketing Strategy Maps", "SEO Content Writing", "Email Marketing Flows", "PR & Crisis Management"],
                 cta: "Get Strategy"
@@ -151,7 +184,6 @@
                             <a href="#home" className="hover:text-white transition-colors">Home</a>
                             <a href="#services" className="hover:text-white transition-colors">Services</a>
                             <a href="#work" className="hover:text-white transition-colors">Work</a>
-                            {/* CHANGED TO CONTACT US */}
                             <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
                         </div>
                         
@@ -183,7 +215,6 @@
                                 <a href="#home" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Home</a>
                                 <a href="#services" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Services</a>
                                 <a href="#work" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Work</a>
-                                {/* CHANGED TO CONTACT US */}
                                 <a href="#contact" onClick={() => setIsOpen(false)} className="text-4xl font-display font-bold text-white">Contact Us</a>
                             </motion.div>
                         )}
@@ -247,7 +278,11 @@
                                 whileHover={{ y: -5 }}
                                 className="glass-panel p-8 md:p-12 rounded-3xl group transition-all hover:border-primary/50"
                             >
-                                <div className="text-4xl mb-6 bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center">{cat.icon}</div>
+                                {/* NEW: High-End Icon Container */}
+                                <div className="mb-6 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-[0_0_20px_rgba(184,255,1,0.1)]">
+                                    {cat.icon}
+                                </div>
+                                
                                 <h3 className="text-3xl font-display font-bold mb-4">{cat.title}</h3>
                                 <p className="text-gray-400 mb-8 text-lg leading-relaxed">{cat.desc}</p>
                                 
