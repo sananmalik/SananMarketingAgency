@@ -333,28 +333,51 @@
             </section>
         );
 
-        const Portfolio = () => (
+       const Portfolio = () => (
             <section id="work" className="py-32 px-6">
                 <div className="max-w-7xl mx-auto">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex flex-col md:flex-row justify-between items-end mb-16">
                         <div>
-                            <span className="text-primary text-xs font-bold tracking-widest uppercase">Our Work</span>
-                            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">Selected Cases</h2>
+                            <span className="text-primary text-xs font-bold tracking-widest uppercase">Our Capabilities</span>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">Strategic Frameworks</h2>
+                            <p className="text-gray-400 mt-4 max-w-xl">
+                                We don't rely on luck. Here are the proven growth models we deploy to scale businesses in the digital age.
+                            </p>
                         </div>
                     </motion.div>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-3 gap-8">
                         {[
-                            { title: "E-Commerce Scale", cat: "SEO & Paid Media", color: "text-accent" },
-                            { title: "FinTech Rebrand", cat: "Identity & UI/UX", color: "text-primary" },
-                            { title: "SaaS Launch", cat: "Strategy & Content", color: "text-secondary" }
+                            { 
+                                title: "The E-Com Scale", 
+                                cat: "Paid Ads & ROAS Model", 
+                                color: "text-accent",
+                                desc: "A high-conversion funnel designed to turn cold traffic into repeat buyers using Meta Ads & Email Automation."
+                            },
+                            { 
+                                title: "Brand Renaissance", 
+                                cat: "Identity & Visual Language", 
+                                color: "text-primary",
+                                desc: "Complete visual overhaul strategy to position local businesses as premium, high-end market leaders."
+                            },
+                            { 
+                                title: "Organic Domination", 
+                                cat: "SEO & Content Architecture", 
+                                color: "text-secondary",
+                                desc: "Technical SEO and content roadmap engineered to rank for high-intent keywords and drive free traffic."
+                            }
                         ].map((item, i) => (
                             <motion.div key={i} variants={fadeInUp} className="group cursor-pointer">
-                                <div className="glass-panel h-80 w-full rounded-xl overflow-hidden mb-6 relative hover:border-white/20 transition-all duration-500">
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent"></div>
-                                    <div className="absolute bottom-6 left-6 z-20">
-                                        <h4 className={`text-xl font-bold text-white group-hover:${item.color} transition-colors`}>{item.title}</h4>
-                                        <p className="text-sm text-gray-400">{item.cat}</p>
+                                <div className="glass-panel h-96 w-full rounded-xl overflow-hidden mb-6 relative hover:border-white/20 transition-all duration-500 flex flex-col justify-end p-8">
+                                    {/* Abstract Background Gradient */}
+                                    <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90`}></div>
+                                    
+                                    {/* Content */}
+                                    <div className="relative z-20">
+                                        <div className="mb-4 opacity-50 text-xs font-mono border border-white/20 inline-block px-2 py-1 rounded">CASE STUDY {i + 1}</div>
+                                        <h4 className={`text-2xl font-bold text-white group-hover:${item.color} transition-colors mb-2`}>{item.title}</h4>
+                                        <p className="text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">{item.cat}</p>
+                                        <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -363,7 +386,6 @@
                 </div>
             </section>
         );
-
        const Contact = () => {
             const [copied, setCopied] = useState(false);
             const [formStatus, setFormStatus] = useState("idle");
